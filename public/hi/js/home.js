@@ -19,7 +19,7 @@ var botConfigHindi =
             title : "संवाद"
 
         };        
-var botConfig =  botConfigEnglish;       
+var botConfig =  botConfigHindi;       
 
 function formatAMPM(date) {
     var hours = date.getHours();
@@ -89,7 +89,7 @@ function insertChat(who, text, time = 0){
                                 '<p>'+ text +'</p>' +
                                 '<p><small>'+date+'</small></p>' +
                             '</div>' +
-                        '</div>' 
+                        '</div>'; 
 						                        send(text);						
 
     }else{
@@ -106,6 +106,8 @@ function insertChat(who, text, time = 0){
 		        if(who!=="me")
 				  speak(text);
 	           $(".chat-text").append(control);
+                   $('.chat-text').scrollTop($('.chat-text')[0].scrollHeight);
+
 
         }, time);
 		
