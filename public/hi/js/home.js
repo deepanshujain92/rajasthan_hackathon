@@ -14,7 +14,7 @@ var botConfigEnglish =
 var botConfigHindi =
         {
             language : "hi",
-            language_code : "hi-IN",
+            language_code : "en-US",
             accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
             title : "संवाद"
 
