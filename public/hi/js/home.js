@@ -163,7 +163,7 @@ $("#input").keypress(function(event) {
 if (event.which == 13) {
 event.preventDefault();
 insertChat("me",$("#input").val() );  
-$('.macro').scrollTop($('.macro')[0].scrollHeight);
+$('.speech').scrollTop($('.speech')[0].scrollHeight);
 $(this).val('');
             
 }

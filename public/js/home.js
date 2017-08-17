@@ -107,10 +107,10 @@ $("#input").keypress(function(event) {
 if (event.which == 13) {
 event.preventDefault();
 insertChat("me",$("#input").val() );  
-$('.macro').scrollTop($('.macro')[0].scrollHeight);
+$('.chat-text').scrollTop($('.chat-text')[0].scrollHeight);
 $(this).val('');
-            
 }
+            
 })});
 function send(text) {
 //var text = $("#input").val();
