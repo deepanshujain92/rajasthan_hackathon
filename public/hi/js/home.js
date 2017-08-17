@@ -78,7 +78,7 @@ function setLanguage(language)
        botConfig = botConfigHindi;
        insertChat('you','नमस्कार!');
        $('.chat_body').slideToggle('slow');
-       document.getElementById('input').placeholder ='क्या जानना चाहते हो!';
+       document.getElementById('input').placeholder ='आप क्या जानना चाहते हैं?';
 
     }
     document.getElementById("title").text = botConfig.title;
