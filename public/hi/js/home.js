@@ -4,6 +4,23 @@ me.avatar = "images/user.png";
 var you = {};
 you.avatar = "images/ssologo.png";
 
+var botConfigEnglish =
+        {
+            language : "en",
+            language_code : "en-US",
+            accessToken : "186574d18dd04bab89242721d5fdc063",
+            title : "Samvaad"
+        };
+var botConfigHindi =
+        {
+            language : "hi",
+            language_code : "hi-IN",
+            accessToken : "186574d18dd04bab89242721d5fdc063",
+            title : "संवाद"
+
+        };        
+var botConfig =  botConfigEnglish;       
+
 function formatAMPM(date) {
     var hours = date.getHours();
     var minutes = date.getMinutes();
@@ -43,6 +60,21 @@ function formatAMPM(date) {
 
     }
   }
+  
+function setLanguage(language)
+{
+    if(language==="english")
+    {
+        botConfig = botConfigEnglish;
+    }
+    else
+    {
+       botConfig = botConfigHindi;
+    }
+    document.getElementById("title").innerHTML = botConfig.title;
+
+}
+
 //-- No use time. It is a javaScript effect.
 function insertChat(who, text, time = 0){
     var control = "";
@@ -105,7 +137,7 @@ resetChat();
 function speak(text, callback) {
     var u = new SpeechSynthesisUtterance();
     u.text = text;
-    u.lang = 'hi-IN';
+    u.lang = botConfig.language_code;
  
     u.onend = function () {
         if (callback) {
@@ -123,8 +155,8 @@ function speak(text, callback) {
 }
 
 /*api.ai code*/
-var lan = "hi-IN";
-var accessToken = "186574d18dd04bab89242721d5fdc063";
+var lan = botConfig.language_code;
+var accessToken = botConfig.accessToken;
 var baseUrl = "https://api.api.ai/v1/";
 $(document).ready(function() {
 $("#input").keypress(function(event) {
