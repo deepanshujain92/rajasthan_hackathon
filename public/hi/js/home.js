@@ -42,7 +42,7 @@ function formatAMPM(date) {
       recognition.continuous = false;
       recognition.interimResults = false;
 
-      recognition.lang = "hi-IN";
+      recognition.lang = botConfig.language_code;
       recognition.start();
 
       recognition.onresult = function(e) {
@@ -72,9 +72,16 @@ function setLanguage(language)
         insertChat('you','Hey ya!');
         $('.chat_body').slideToggle('slow');
         document.getElementById('input').placeholder ='What you want to know?';
-
-
-    }
+  // create a new keyboard event
+  document.addEventListener('DOMContentLoaded', function () {
+        var event = new KeyboardEvent('keydown', {
+      key: 'g',
+      ctrlKey: true
+    });
+    // dispatch the ctrl+g key press event
+    document.dispatchEvent(event);
+    });
+    }  
     else
     {
        botConfig = botConfigHindi;
@@ -193,7 +200,9 @@ insertChat("me",$("#input").val() );
 $(this).val('');
             
 }
-})});
+}
+        )
+        });
 function send(text) {
 //var text = $("#input").val();
 $.ajax({
