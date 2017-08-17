@@ -2,16 +2,81 @@
 <!DOCTYPE html><!-- saved from url=(0046)http://packetcode.com/apps/facebook-like-chat/--><html lang="en" class="gr__packetcode_com"><head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="">
-<meta name="author" content=""><title>Rajasthan Hackathon - Samvaad</title>
-<link href="./css/style.css" rel="stylesheet">		
+<meta name="author" content=""><title>राजस्थान हैकाथॉन - संवाद</title>
+<link href="./css/style.css" rel="stylesheet">      
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    	<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
-		<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+<script type="text/javascript">
+
+                         // Load the Google Transliterate API
+                        google.load("elements", "1", {packages: "transliteration"});
+
+                </script> 
+                                <script> 
+
+                function getTheTargetLanguageCulture(chooseLanguage){
+                        var destLanguageCulture = "";
+
+                        switch(chooseLanguage)
+                                {
+                                        case "HINDI" :  destLanguageCulture = [google.elements.transliteration.LanguageCode.HINDI];
+                                                                        document.getElementById("spLanguage").textContent="Hindi";
+                                                                        break;
+
+                                        case "ENGLISH" : destLanguageCulture = [google.elements.transliteration.LanguageCode.ENGLISH];
+                                                                         document.getElementById("spLanguage").textContent="English";
+                                                                         break;
+
+                                        default :               destLanguageCulture = [google.elements.transliteration.LanguageCode.HINDI];
+                                                                        document.getElementById("spLanguage").textContent="Hindi";
+                                                                        break;
+                                }
+                                return destLanguageCulture; 
+                        }
+
+                        function OnLoad(chooseLanguage) {                               
+
+                                //get the target language culture
+                                var destLanguageCulture = getTheTargetLanguageCulture(chooseLanguage);                          
+                                
+                                //Make the options
+                                var boolea;
+                                if(botConfig.language==="hi") {boolea=true;}
+                                else boolea = false;
+                                 var options = {
+                                                        sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+
+                                                        destinationLanguage: destLanguageCulture,
+
+                                                        shortcutKey: 'ctrl+g',
+
+                                                        transliterationEnabled: boolea
+
+                                                                };       
+
+                                // Create an instance of TransliterationControl with the needed options.
+                                var control = new  google.elements.transliteration.TransliterationControl(options);
+
+                                // Enable transliteration in the textbox with id 'txtInput'.
+                               if(botConfig.language==="hi") {control.makeTransliteratable(["input"]);};                                                     
+
+                                } //end onLoad function
+
+                        //Invoking the onLoad handler
+                        google.setOnLoadCallback(OnLoad);        
+
+                </script> 
+                
         <link rel="stylesheet" href="css/home.css">
-	    <script src="js/home.js"></script>
-		<style>body {
+        <script src="js/home.js"></script>
+        <style>body {
 background-image: url("images/Capture.JPG");
 background-repeat: no-repeat;
 background-attachment: fixed;
@@ -19,12 +84,19 @@ background-position: center;
 }</style>
 
 </head>
-<body data-gr-c-s-loaded="true" data-feedly-mini="yes"><div class="chat_box"><div class="chat_head"> Samvaad </div>
+<body data-gr-c-s-loaded="true" data-feedly-mini="yes">                <span id="spLanguage"></span>
+<div class="chat_box">
+    <div class="chat_head" id="title"> संवाद | Samvaad
+    <button type="button" id="language" ng-click="setLanguage('english')" style=" float: right ;color:#FFFFFF;" class="btn btn-primary" value="english">English</button>
+    <button type="button" id="language" ng-click="setLanguage('hindi')" style=" float: right  ;  color:#FFFFFF;" class="btn btn-primary" value="hindi">हिंदी</button>
+    <i type="button" id = "audioFlag" ng-click="resetChat()" style=" display:flex;  float: right  ; color:#FFFFFF;" class="glyphicon glyphicon-volume-down"></i>
+</div>                       
 <div style="display: none;" class="chat_body">   
             <div class="chat-text"></div>
-                <div style="clear:both;height:50px">                        
+                <div class="speech" style="clear:both;height:50px">                        
                     
-                        <input class="mytext form-control" id="input" placeholder="what you want to know!"/>
-                    
+                        <input type="text" class="mytext form-control" id="input" placeholder="आप क्या जानना चाहते हैं?"/>
+                        <img onclick="startDictation()" src="http://i.imgur.com/cHidSVu.gif" />
+
                 </div>
         </div></div><div id="feedly-mini" title="feedly Mini tookit"></div></body></html>

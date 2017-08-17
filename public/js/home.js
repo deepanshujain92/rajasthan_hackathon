@@ -3,6 +3,25 @@ me.avatar = "images/user.png";
 
 var you = {};
 you.avatar = "images/ssologo.png";
+var audioFlag = true;
+var botConfigEnglish =
+        {
+            language : "en",
+            language_code : "en-US",
+            api_ai : "en-US",
+            accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
+            title : "Samvaad"
+        };
+var botConfigHindi =
+        {
+            language : "hi",
+            language_code : "hi-IN",
+            api_api:"en-US",
+            accessToken : "a6147c5328c04d29b7455ee6428b765b",
+            title : "संवाद"
+
+        };        
+var botConfig =  botConfigHindi;       
 
 function formatAMPM(date) {
     var hours = date.getHours();
@@ -14,6 +33,66 @@ function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }            
+  function startDictation() {
+
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = botConfig.language_code;
+      recognition.start();
+
+      recognition.onresult = function(e) {
+        document.getElementById('input').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+        //document.getElementById('labnol').submit();
+        insertChat("me",document.getElementById('input').value);
+        document.getElementById('input').value = '';
+        
+
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+      };
+
+    }
+  }
+  
+function setLanguage(language)
+{
+    resetChat(); 
+    if(language==="english")
+    {
+        botConfig = botConfigEnglish;
+        insertChat('you','Hey ya!');
+        $('.chat_body').slideToggle('slow');
+        document.getElementById('input').placeholder ='What you want to know?';
+  // create a new keyboard event
+  document.addEventListener('DOMContentLoaded', function () {
+        var event = new KeyboardEvent('keydown', {
+      key: 'g',
+      ctrlKey: true
+    });
+    // dispatch the ctrl+g key press event
+    document.dispatchEvent(event);
+    });
+    }  
+    else
+    {
+       botConfig = botConfigHindi;
+       insertChat('you','नमस्कार!');
+       $('.chat_body').slideToggle('slow');
+       document.getElementById('input').placeholder ='आप क्या जानना चाहते हैं?';
+
+    }
+    document.getElementById("title").text = botConfig.title;
+    
+}
 
 //-- No use time. It is a javaScript effect.
 function insertChat(who, text, time = 0){
@@ -29,8 +108,8 @@ function insertChat(who, text, time = 0){
                                 '<p>'+ text +'</p>' +
                                 '<p><small>'+date+'</small></p>' +
                             '</div>' +
-                        '</div>' 
-						                        send(text);						
+                        '</div>'; 
+                                                send(text);                     
 
     }else{
         control = 
@@ -43,12 +122,14 @@ function insertChat(who, text, time = 0){
     }
     setTimeout(
         function(){   
-		        if(who!=="me")
-				  speak(text);
-	           $(".chat-text").append(control);
+                if(who!=="me")
+                  speak(text);
+               $(".chat-text").append(control);
+                   $('.chat-text').scrollTop($('.chat-text')[0].scrollHeight);
+
 
         }, time);
-		
+        
     
 }
 
@@ -57,35 +138,41 @@ function resetChat(){
 }
 
 $(document).ready(function(){
-    $("button").click(function(){
+$(document).on("click", "#userResponse", function(){
                         insertChat("me", ($(this).val()));     
+});
+
+$(document).on("click", "#audioFlag", function(){
+audioFlag = !audioFlag;
+    $(this).toggleClass("glyphicon-volume-down glyphicon-volume-off");
+
+});
+$(document).on("click", "#language", function(){
+                        setLanguage($(this).val());     
+});
+   
+    $('.chat_head').click(function(){
+        $('.chat_body').slideToggle('slow');
     });
-	$('.chat_head').click(function(){
-	    $('.chat_body').slideToggle('slow');
-	});
-	$('.msg_head').click(function(){
-		$('.msg_wrap').slideToggle('slow');
-	});
-	
-	$('.close').click(function(){
-		$('.msg_box').hide();
-	});
+    $('.msg_head').click(function(){
+        $('.msg_wrap').slideToggle('slow');
+    });
+    
+    $('.close').click(function(){
+        $('.msg_box').hide();
+    });
 });
 //-- Clear Chat
 resetChat();
 
 function speak(text, callback) {
-    var u = new SpeechSynthesisUtterance();
-    u.text = text;
-    u.lang = 'en-US';
- audio_timeout = setTimeout(function(){
-    window.speechSynthesis.cancel();
-},20000);
+   if(audioFlag){ var u = new SpeechSynthesisUtterance();
+    u.lang = botConfig.language_code;
+    var htmlObject = $('<p>'+text+'</p>'); // jquery call
+    u.text =     htmlObject.text();
     u.onend = function () {
         if (callback) {
             callback();
-            clearTimeout(audio_timeout);
-
         }
     };
  
@@ -96,22 +183,26 @@ function speak(text, callback) {
     };
  
     speechSynthesis.speak(u);
+   }
 }
 
 /*api.ai code*/
-var lan = "en-US";
-var accessToken = "186574d18dd04bab89242721d5fdc063";
+var lan = botConfig.language_code;
 var baseUrl = "https://api.api.ai/v1/";
 $(document).ready(function() {
 $("#input").keypress(function(event) {
-if (event.which == 13) {
+if (event.which === 13) {
 event.preventDefault();
-insertChat("me",$("#input").val() );  
-$('.chat-text').scrollTop($('.chat-text')[0].scrollHeight);
+if($("#input").val()!=='')
+{
+insertChat("me",$("#input").val() );
+}  
 $(this).val('');
-}
             
-})});
+}
+}
+        )
+        });
 function send(text) {
 //var text = $("#input").val();
 $.ajax({
@@ -120,7 +211,7 @@ url: baseUrl + "query?v=20150910",
 contentType: "application/json; charset=utf-8",
 dataType: "json",
 headers: {
-"Authorization": "Bearer " + accessToken
+"Authorization": "Bearer " + botConfig.accessToken
 },
 data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
 success: function(data) {
@@ -138,8 +229,7 @@ $("#response").text(val);
 $("#query").text($("#input").val());
 }
 //-- Print Messages
-insertChat("you", 'Welcome to Samvaad ! you can do so much with me!\n');
-insertChat("you",'<button type="button" class="btn btn-primary btn-round-lg btn-lg" value="Yes">Yes</button><button type="button" class="btn btn-primary btn-round-lg btn-lg" value="No">No</button>', 0);  
+insertChat("you", 'नमस्कार! सम्वाद में आपका स्वागत है! \n');
 //insertChat("me", '<button type="button" class="btn btn-primary btn-round-lg btn-lg">Option 2</button>', 0);  
 //insertChat("you", "Hi, Pablo", 1500);
 //insertChat("me", "What would you like to talk about today?", 3500);
