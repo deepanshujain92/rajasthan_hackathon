@@ -163,10 +163,12 @@ var accessToken = botConfig.accessToken;
 var baseUrl = "https://api.api.ai/v1/";
 $(document).ready(function() {
 $("#input").keypress(function(event) {
-if (event.which == 13) {
+if (event.which === 13) {
 event.preventDefault();
-insertChat("me",$("#input").val() );  
-$('.macro').scrollTop($('.macro')[0].scrollHeight);
+if($("#input").val()!=='')
+{
+insertChat("me",$("#input").val() );
+}  
 $(this).val('');
             
 }
