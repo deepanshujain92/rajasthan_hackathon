@@ -8,18 +8,18 @@ var botConfigEnglish =
         {
             language : "en",
             language_code : "en-US",
-            accessToken : "a6147c5328c04d29b7455ee6428b765b",
+            accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
             title : "Samvaad"
         };
 var botConfigHindi =
         {
             language : "hi",
             language_code : "en-US",
-            accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
+            accessToken : "a6147c5328c04d29b7455ee6428b765b",
             title : "संवाद"
 
         };        
-var botConfig =  botConfigHindi;       
+var botConfig =  botConfigEnglish;       
 
 function formatAMPM(date) {
     var hours = date.getHours();
