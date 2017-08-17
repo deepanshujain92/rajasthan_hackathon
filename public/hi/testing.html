@@ -1,0 +1,89 @@
+<html>
+
+        <head>
+
+                <title>Translate English To Hindi/Bengali through Google API</title>
+                
+                <script type="text/javascript" src="http://www.google.com/jsapi"></script>
+                
+                <script type="text/javascript">
+
+                         // Load the Google Transliterate API
+                        google.load("elements", "1", {packages: "transliteration"});
+
+                </script>  
+
+                <script>
+
+                //Get the user selected language for translation
+                function getUserLanguage() {
+                        
+                        var e = document.getElementById("ddlLanguage");
+                        var chooseLanguage = e.options[e.selectedIndex].value;
+                        
+                        OnLoad(chooseLanguage);         
+                }
+
+                //Get the Destination Language Culture
+                function getTheTargetLanguageCulture(chooseLanguage){
+                        var destLanguageCulture = "";
+
+                        switch(chooseLanguage)
+                                {
+                                        case "HINDI" :  destLanguageCulture = [google.elements.transliteration.LanguageCode.HINDI];
+                                                                        document.getElementById("spLanguage").textContent="Hindi";
+                                                                        break;
+
+                                        case "BENGALI" : destLanguageCulture = [google.elements.transliteration.LanguageCode.BENGALI];
+                                                                         document.getElementById("spLanguage").textContent="Bengali";
+                                                                         break;
+
+                                        default :               destLanguageCulture = [google.elements.transliteration.LanguageCode.HINDI];
+                                                                        document.getElementById("spLanguage").textContent="Hindi";
+                                                                        break;
+                                }
+                                return destLanguageCulture; 
+                        }
+
+                        function OnLoad(chooseLanguage) {                               
+
+                                //get the target language culture
+                                var destLanguageCulture = getTheTargetLanguageCulture(chooseLanguage);                          
+                                
+                                //Make the options
+                                 var options = {
+                                                        sourceLanguage: google.elements.transliteration.LanguageCode.ENGLISH,
+
+                                                        destinationLanguage: destLanguageCulture,
+
+                                                        shortcutKey: 'ctrl+g',
+
+                                                        transliterationEnabled: true
+
+                                                                };       
+
+                                // Create an instance of TransliterationControl with the needed options.
+                                var control = new  google.elements.transliteration.TransliterationControl(options);
+
+                                // Enable transliteration in the textbox with id 'txtInput'.
+                                control.makeTransliteratable(["txtInput"]);                                                     
+
+                                } //end onLoad function
+
+                        //Invoking the onLoad handler
+                        google.setOnLoadCallback(OnLoad);        
+
+                </script> 
+
+        </head>
+
+        <body> 
+                Choose Your Language:
+                <select onchange="getUserLanguage()" id="ddlLanguage">
+                                  <option value="HINDI">Hindi</option>
+                                  <option value="BENGALI" selected>Bengali</option>                               
+                        </select>
+                        <br/><br/>
+                        Type In English and the code will be translated in <span id="spLanguage"></span>: <input size="40" type="text" id="txtInput"/>
+        </body>
+</html>

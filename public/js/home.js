@@ -78,10 +78,14 @@ function speak(text, callback) {
     var u = new SpeechSynthesisUtterance();
     u.text = text;
     u.lang = 'en-US';
- 
+ audio_timeout = setTimeout(function(){
+    window.speechSynthesis.cancel();
+},20000);
     u.onend = function () {
         if (callback) {
             callback();
+            clearTimeout(audio_timeout);
+
         }
     };
  

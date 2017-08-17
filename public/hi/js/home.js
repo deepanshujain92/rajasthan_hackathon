@@ -14,7 +14,35 @@ function formatAMPM(date) {
     var strTime = hours + ':' + minutes + ' ' + ampm;
     return strTime;
 }            
+  function startDictation() {
 
+    if (window.hasOwnProperty('webkitSpeechRecognition')) {
+
+      var recognition = new webkitSpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.lang = "hi-IN";
+      recognition.start();
+
+      recognition.onresult = function(e) {
+        document.getElementById('input').value
+                                 = e.results[0][0].transcript;
+        recognition.stop();
+        //document.getElementById('labnol').submit();
+        insertChat("me",document.getElementById('input').value);
+        document.getElementById('input').value = '';
+        
+
+      };
+
+      recognition.onerror = function(e) {
+        recognition.stop();
+      };
+
+    }
+  }
 //-- No use time. It is a javaScript effect.
 function insertChat(who, text, time = 0){
     var control = "";
