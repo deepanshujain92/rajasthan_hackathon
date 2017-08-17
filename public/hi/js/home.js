@@ -19,7 +19,7 @@ var botConfigHindi =
             title : "संवाद"
 
         };        
-var botConfig =  botConfigEnglish;       
+var botConfig =  botConfigHindi;       
 
 function formatAMPM(date) {
     var hours = date.getHours();
@@ -68,14 +68,16 @@ function setLanguage(language)
     {
         botConfig = botConfigEnglish;
         insertChat('you','Hey ya!');
+        $('.chat_body').slideToggle('slow');
+
     }
     else
     {
        botConfig = botConfigHindi;
        insertChat('you','नमस्कार!');
-
+       $('.chat_body').slideToggle('slow');
     }
-    document.getElementById("title").innerHTML = botConfig.title;
+    document.getElementById("title").text = botConfig.title;
     
 }
 
@@ -126,6 +128,9 @@ $(document).ready(function(){
 $(document).on("click", "#userResponse", function(){
                         insertChat("me", ($(this).val()));     
 });
+$(document).on("click", "#language", function(){
+                        setLanguage($(this).val());     
+});
    
     $('.chat_head').click(function(){
         $('.chat_body').slideToggle('slow');
@@ -163,7 +168,6 @@ function speak(text, callback) {
 
 /*api.ai code*/
 var lan = botConfig.language_code;
-var accessToken = botConfig.accessToken;
 var baseUrl = "https://api.api.ai/v1/";
 $(document).ready(function() {
 $("#input").keypress(function(event) {
@@ -185,7 +189,7 @@ url: baseUrl + "query?v=20150910",
 contentType: "application/json; charset=utf-8",
 dataType: "json",
 headers: {
-"Authorization": "Bearer " + accessToken
+"Authorization": "Bearer " + botConfig.accessToken
 },
 data: JSON.stringify({ query: text, lang: "en", sessionId: "somerandomthing" }),
 success: function(data) {
@@ -203,8 +207,7 @@ $("#response").text(val);
 $("#query").text($("#input").val());
 }
 //-- Print Messages
-insertChat("you", 'सम्वाद में आपका स्वागत है! हम एक साथ बहुत कुछ कर सकते हैं!\n');
-insertChat("you",'<button type="button" class="btn btn-primary btn-round-lg btn-lg" id="userResponse" value="हाँ">हाँ</button><button type="button" class="btn btn-primary btn-round-lg btn-lg" id="userResponse" value="नहीं">नहीं</button>', 0);  
+insertChat("you", 'नमस्कार! सम्वाद में आपका स्वागत है! \n');
 //insertChat("me", '<button type="button" class="btn btn-primary btn-round-lg btn-lg">Option 2</button>', 0);  
 //insertChat("you", "Hi, Pablo", 1500);
 //insertChat("me", "What would you like to talk about today?", 3500);
