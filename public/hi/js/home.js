@@ -8,14 +8,14 @@ var botConfigEnglish =
         {
             language : "en",
             language_code : "en-US",
-            accessToken : "186574d18dd04bab89242721d5fdc063",
+            accessToken : "a6147c5328c04d29b7455ee6428b765b",
             title : "Samvaad"
         };
 var botConfigHindi =
         {
             language : "hi",
             language_code : "hi-IN",
-            accessToken : "186574d18dd04bab89242721d5fdc063",
+            accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
             title : "संवाद"
 
         };        
@@ -117,9 +117,10 @@ function resetChat(){
 }
 
 $(document).ready(function(){
-    $("button").click(function(){
+$(document).on("click", "#userResponse", function(){
                         insertChat("me", ($(this).val()));     
-    });
+});
+   
 	$('.chat_head').click(function(){
 	    $('.chat_body').slideToggle('slow');
 	});
@@ -195,7 +196,7 @@ $("#query").text($("#input").val());
 }
 //-- Print Messages
 insertChat("you", 'सम्वाद में आपका स्वागत है! हम एक साथ बहुत कुछ कर सकते हैं!\n');
-insertChat("you",'<button type="button" class="btn btn-primary btn-round-lg btn-lg" value="हाँ">हाँ</button><button type="button" class="btn btn-primary btn-round-lg btn-lg" value="नहीं">नहीं</button>', 0);  
+insertChat("you",'<button type="button" class="btn btn-primary btn-round-lg btn-lg" id="userResponse" value="हाँ">हाँ</button><button type="button" class="btn btn-primary btn-round-lg btn-lg" id="userResponse" value="नहीं">नहीं</button>', 0);  
 //insertChat("me", '<button type="button" class="btn btn-primary btn-round-lg btn-lg">Option 2</button>', 0);  
 //insertChat("you", "Hi, Pablo", 1500);
 //insertChat("me", "What would you like to talk about today?", 3500);
