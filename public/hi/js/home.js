@@ -69,6 +69,8 @@ function setLanguage(language)
         botConfig = botConfigEnglish;
         insertChat('you','Hey ya!');
         $('.chat_body').slideToggle('slow');
+        document.getElementById('input').placeholder ='What you want to know?';
+
 
     }
     else
@@ -76,6 +78,8 @@ function setLanguage(language)
        botConfig = botConfigHindi;
        insertChat('you','नमस्कार!');
        $('.chat_body').slideToggle('slow');
+       document.getElementById('input').placeholder ='क्या जानना चाहते हो!';
+
     }
     document.getElementById("title").text = botConfig.title;
     
