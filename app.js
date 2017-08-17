@@ -25,7 +25,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
-
+app.post('/webhook', function (req, res) {
+    var body = req.body;
+    var action = (body.result.action);
+    var params = body.result.parameters;
+            var json = {
+                "speech": '<button type="button" id="userResponse" class="btn btn-primary btn-round-lg btn-lg" value="Yes">Yes</button>',
+                "displayText": "",
+                "source": "bot"
+            };
+            res.set("Content-type", "application/json")
+            res.send(json);
+    });
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
