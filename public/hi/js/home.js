@@ -3,7 +3,7 @@ me.avatar = "images/user.png";
 
 var you = {};
 you.avatar = "images/ssologo.png";
-
+var audioFlag = true;
 var botConfigEnglish =
         {
             language : "en",
@@ -14,7 +14,7 @@ var botConfigEnglish =
 var botConfigHindi =
         {
             language : "hi",
-            language_code : "en-US",
+            language_code : "hi-IN",
             accessToken : "a6147c5328c04d29b7455ee6428b765b",
             title : "संवाद"
 
@@ -128,6 +128,12 @@ $(document).ready(function(){
 $(document).on("click", "#userResponse", function(){
                         insertChat("me", ($(this).val()));     
 });
+
+$(document).on("click", "#audioFlag", function(){
+audioFlag = !audioFlag;
+    $(this).toggleClass("glyphicon-volume-down glyphicon-volume-off");
+
+});
 $(document).on("click", "#language", function(){
                         setLanguage($(this).val());     
 });
@@ -147,7 +153,7 @@ $(document).on("click", "#language", function(){
 resetChat();
 
 function speak(text, callback) {
-    var u = new SpeechSynthesisUtterance();
+   if(audioFlag){ var u = new SpeechSynthesisUtterance();
     u.text = text;
     u.lang = botConfig.language_code;
  
@@ -164,6 +170,7 @@ function speak(text, callback) {
     };
  
     speechSynthesis.speak(u);
+   }
 }
 
 /*api.ai code*/
