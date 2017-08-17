@@ -8,6 +8,7 @@ var botConfigEnglish =
         {
             language : "en",
             language_code : "en-US",
+            api_ai : "en-US",
             accessToken : "001a9dec3b1b403b8d2bb09a21ab4fc0",
             title : "Samvaad"
         };
@@ -15,6 +16,7 @@ var botConfigHindi =
         {
             language : "hi",
             language_code : "hi-IN",
+            api_api:"en-US",
             accessToken : "a6147c5328c04d29b7455ee6428b765b",
             title : "संवाद"
 
@@ -158,9 +160,9 @@ resetChat();
 
 function speak(text, callback) {
    if(audioFlag){ var u = new SpeechSynthesisUtterance();
-    u.text = text;
     u.lang = botConfig.language_code;
- 
+    var htmlObject = $('<p>'+text+'</p>'); // jquery call
+    u.text =     htmlObject.text();
     u.onend = function () {
         if (callback) {
             callback();
